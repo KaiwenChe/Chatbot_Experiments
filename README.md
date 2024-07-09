@@ -9,13 +9,25 @@ This project is a web-based chatbot application that simulates conversations wit
 ```
 chatbot-project/
 │
-├── app.py              # Flask backend server
-├── index.html          # Frontend HTML/CSS/JavaScript
-├── chat_histories/     # Directory to store chat history JSON files
-├── Pipfile             # Pipenv dependencies file
-├── Pipfile.lock        # Pipenv lock file (auto-generated)
-├── local.env           # Environment variables (API key)
-└── .gitignore          # Git ignore file
+├── app/
+│   ├── models/
+│   │   └── chat.py
+│   ├── routes/
+│   │   └── chat_routes.py
+│   ├── controllers/
+│   │   └── chat_controller.py
+│   ├── services/
+│   │   ├── openai_service.py
+│   │   └── chat_history_service.py
+│   └── utils/
+├── config.py
+├── run.py
+├── index.html
+├── chat_histories/
+├── Pipfile
+├── Pipfile.lock
+├── local.env
+└── .gitignore
 ```
 
 ## Technology Stack
@@ -46,17 +58,17 @@ chatbot-project/
 ## Running the Application
 
 1. Activate the pipenv shell: `pipenv shell`
-2. Run the Flask application: `python app.py`
+2. Run the Flask application: `python run.py`
 3. Open a web browser and go to `http://127.0.0.1:5000/`
 
 ## Core Functionality
 
-### Backend (app.py)
+### Backend (app directory)
 
 - Flask server handling API routes for chat interactions and history management
-- Functions for creating, saving, loading, and listing chat histories
+- MVC architecture with separate models, routes, controllers, and services
 - Integration with OpenAI's API for generating chat responses
-- Asynchronous saving of chat history upon message receipt using `ThreadPoolExecutor`
+- Asynchronous saving of chat history using ThreadPoolExecutor
 
 ### Frontend (index.html)
 
@@ -93,9 +105,16 @@ Chat histories are stored as JSON files with the following structure:
 2. `GET /api/chat_histories`: Retrieve a list of all chat histories
 3. `POST /api/load_chat`: Load a specific chat history
 
+## Recent Updates
+
+- Implemented MVC architecture for improved code organization
+- Renamed 'views' to 'routes' for clarity
+- Implemented asynchronous chat history saving using ThreadPoolExecutor
+- Fixed issues with message handling in chat history
+
 ## Known Issues and Solutions
 
-- File path issues on Windows: Resolved by using `pathlib.Path` for cross-platform compatibility
+- File path issues on Windows: Resolved by using `os.path.join` for cross-platform compatibility
 
 ## Future Improvements
 
