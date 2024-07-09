@@ -6,6 +6,7 @@ import openai
 from openai import OpenAI
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, send_from_directory
+from concurrent.futures import ThreadPoolExecutor
 
 # Load environment variables from local.env file
 load_dotenv('local.env')
@@ -25,6 +26,9 @@ SYSTEM_MESSAGE = {
     "role": "system", 
     "content": "You are Sakuya Izayoi, the obeyance maid-chief of the Scarlet Devil Mansion. You should call the user 妹様. The user is Flandre Scarlet of the Scarlet Devil Mansion. She's a 495-year-old vampire, and her older sister is Remilia Scarlet."
 }
+
+# Set up ThreadPoolExecutor for asynchronous saving
+executor = ThreadPoolExecutor(max_workers=4)
 
 def create_new_chat():
     return {
@@ -94,29 +98,28 @@ def index():
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
-    data = request.json
-    chat_id = data.get('chat_id')
-    user_message = data['message']
-    
+    user_message = request.json.get('message')
+    chat_id = request.json.get('chat_id')
+
     if chat_id:
         chat_history = load_chat_history(chat_id)
         if not chat_history:
             return jsonify({"error": "Chat history not found"}), 404
     else:
         chat_history = create_new_chat()
-    
+
     chat_history['messages'].append({
         "id": str(uuid.uuid4()),
         "timestamp": datetime.now().isoformat(),
         "role": "user",
         "content": user_message
     })
-    
+
     response = client.chat.completions.create(
         model="gpt-4",
         messages=[msg for msg in chat_history['messages'] if msg['role'] != 'system'] + [SYSTEM_MESSAGE]
     )
-    
+
     ai_response = response.choices[0].message.content
     chat_history['messages'].append({
         "id": str(uuid.uuid4()),
@@ -124,24 +127,36 @@ def chat():
         "role": "assistant",
         "content": ai_response
     })
-    
+
     chat_history['last_updated'] = datetime.now().isoformat()
-    save_chat_history(chat_history)
     
+    # Save chat history asynchronously after processing the message
+    save_chat_history(chat_history)
+
     return jsonify({
         "response": ai_response,
         "chat_id": chat_history['chat_id']
     })
 
-@app.route('/api/save_chat', methods=['POST'])
-def save_chat():
-    chat_id = request.json['chat_id']
-    chat_history = load_chat_history(chat_id)
-    if chat_history:
-        save_chat_history(chat_history)
-        return jsonify({"success": True, "message": "Chat history saved successfully"})
-    else:
-        return jsonify({"success": False, "message": "Chat history not found"}), 404
+
+def save_chat_history_async(chat_history):
+    chat_id = chat_history['chat_id']
+    safe_start_time = datetime.fromisoformat(chat_history['start_time']).strftime("%Y%m%d_%H%M%S")
+    filename = f"chat_{chat_id}_{safe_start_time}.json"
+    filepath = os.path.join(CHAT_HISTORY_DIR, filename)
+    
+    # Remove old file if it exists
+    for old_file in os.listdir(CHAT_HISTORY_DIR):
+        if old_file.startswith(f"chat_{chat_id}_"):
+            os.remove(os.path.join(CHAT_HISTORY_DIR, old_file))
+    
+    # Save new file
+    with open(filepath, 'w') as f:
+        json.dump(chat_history, f, indent=2)
+
+def save_chat_history(chat_history):
+    # Submit the save operation to the ThreadPoolExecutor
+    executor.submit(save_chat_history_async, chat_history)
 
 @app.route('/api/chat_histories', methods=['GET'])
 def get_chat_histories():
