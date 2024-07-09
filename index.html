@@ -209,6 +209,9 @@
                     const data = await response.json();
                     addMessage(data.response, false);
                     chatId = data.chat_id;
+                    
+                    // Call loadChatHistories to update the history panel
+                    await loadChatHistories();
                 } catch (error) {
                     console.error('Error:', error);
                     addMessage('Sorry, there was an error processing your request.', false);
@@ -290,10 +293,10 @@
         });
 
         // Load chat histories when the page loads
-        loadChatHistories();
+        document.addEventListener('DOMContentLoaded', loadChatHistories);
 
-        // Refresh chat histories every minute
-        setInterval(loadChatHistories, 60000);
+        // Load chat histories when the page regains focus (including refresh)
+        window.addEventListener('focus', loadChatHistories);
     </script>
 </body>
 </html>

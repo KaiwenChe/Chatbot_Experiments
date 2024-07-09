@@ -4,32 +4,6 @@
 
 This project is a web-based chatbot application that simulates conversations with Sakuya Izayoi, a character from the Touhou Project. The chatbot interacts with users as if they were Flandre Scarlet, another character from the same universe. The application uses OpenAI's GPT-4 for generating responses and includes functionality for saving, loading, and managing chat histories.
 
-## Project Structure
-
-```
-chatbot-project/
-│
-├── app/
-│   ├── models/
-│   │   └── chat.py
-│   ├── routes/
-│   │   └── chat_routes.py
-│   ├── controllers/
-│   │   └── chat_controller.py
-│   ├── services/
-│   │   ├── openai_service.py
-│   │   └── chat_history_service.py
-│   └── utils/
-├── config.py
-├── run.py
-├── index.html
-├── chat_histories/
-├── Pipfile
-├── Pipfile.lock
-├── local.env
-└── .gitignore
-```
-
 ## Technology Stack
 
 - Backend: Python 3.12 with Flask
@@ -107,10 +81,9 @@ Chat histories are stored as JSON files with the following structure:
 
 ## Recent Updates
 
-- Implemented MVC architecture for improved code organization
-- Renamed 'views' to 'routes' for clarity
-- Implemented asynchronous chat history saving using ThreadPoolExecutor
-- Fixed issues with message handling in chat history
+- Improved chat history loading in the frontend
+- Added real-time updates of the chat history panel
+- Implemented efficient chat history loading on page load and focus
 
 ## Known Issues and Solutions
 
