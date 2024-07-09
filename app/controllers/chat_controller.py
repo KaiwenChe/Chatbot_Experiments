@@ -1,3 +1,5 @@
+# File path: app\controllers\chat_controller.py
+
 from app.models.chat import ChatHistory
 from app.services.openai_service import OpenAIService
 from app.services.chat_history_service import ChatHistoryService

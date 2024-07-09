@@ -1,3 +1,5 @@
+# File path: app\routes\chat_routes.py
+
 from flask import Blueprint, request, jsonify, send_from_directory
 from app.controllers.chat_controller import ChatController
 

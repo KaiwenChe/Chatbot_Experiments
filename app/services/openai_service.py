@@ -1,3 +1,5 @@
+# File path: app\services\openai_service.py
+
 from openai import OpenAI
 from config import Config
 

@@ -1,3 +1,5 @@
+# File path: app\models\chat.py
+
 from datetime import datetime
 import uuid
 
