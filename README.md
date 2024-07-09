@@ -32,7 +32,7 @@ chatbot-project/
 2. Web-based user interface for chatting
 3. Integration with OpenAI's GPT-4 for generating responses
 4. Chat history management (save, load, list)
-5. Periodic auto-saving of chat sessions
+5. Asynchronous saving of chat sessions
 6. User interface for browsing and loading past chat sessions
 
 ## Setup Instructions
@@ -56,12 +56,13 @@ chatbot-project/
 - Flask server handling API routes for chat interactions and history management
 - Functions for creating, saving, loading, and listing chat histories
 - Integration with OpenAI's API for generating chat responses
+- Asynchronous saving of chat history upon message receipt using `ThreadPoolExecutor`
 
 ### Frontend (index.html)
 
 - Single-page application with chat interface and history panel
 - JavaScript functions for sending/receiving messages, managing chat histories
-- Periodic auto-saving and ability to load previous chat sessions
+- Ability to load previous chat sessions
 
 ## Data Structure
 
@@ -89,9 +90,8 @@ Chat histories are stored as JSON files with the following structure:
 ## API Endpoints
 
 1. `POST /api/chat`: Send a message and receive a response
-2. `POST /api/save_chat`: Manually trigger saving of the current chat
-3. `GET /api/chat_histories`: Retrieve a list of all chat histories
-4. `POST /api/load_chat`: Load a specific chat history
+2. `GET /api/chat_histories`: Retrieve a list of all chat histories
+3. `POST /api/load_chat`: Load a specific chat history
 
 ## Known Issues and Solutions
 
