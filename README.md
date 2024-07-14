@@ -7,7 +7,7 @@ This project is a web-based chatbot application that simulates conversations wit
 ## Technology Stack
 
 - Backend: Python 3.12 with Flask
-- Frontend: HTML, CSS, JavaScript
+- Frontend: HTML, CSS, JavaScript (ES6 modules)
 - AI Model: OpenAI GPT-4
 - Environment Management: pipenv
 - Configuration: python-dotenv for .env file handling
@@ -35,6 +35,37 @@ This project is a web-based chatbot application that simulates conversations wit
 2. Run the Flask application: `python run.py`
 3. Open a web browser and go to `http://127.0.0.1:5000/`
 
+## Project Structure
+
+```
+your_project/
+├── app/
+│   ├── controllers/
+│   │   └── chat_controller.py
+│   ├── models/
+│   │   └── chat.py
+│   ├── routes/
+│   │   └── chat_routes.py
+│   └── services/
+│       ├── chat_history_service.py
+│       └── openai_service.py
+├── static/
+│   ├── css/
+│   │   └── styles.css
+│   └── js/
+│       ├── main.js
+│       ├── chat.js
+│       ├── history.js
+│       ├── eventListeners.js
+│       ├── state.js
+│       └── utils.js
+├── templates/
+│   └── index.html
+├── config.py
+├── run.py
+└── README.md
+```
+
 ## Core Functionality
 
 ### Backend (app directory)
@@ -44,11 +75,12 @@ This project is a web-based chatbot application that simulates conversations wit
 - Integration with OpenAI's API for generating chat responses
 - Asynchronous saving of chat history using ThreadPoolExecutor
 
-### Frontend (index.html)
+### Frontend (static directory)
 
-- Single-page application with chat interface and history panel
-- JavaScript functions for sending/receiving messages, managing chat histories
-- Ability to load previous chat sessions
+- Modular JavaScript structure using ES6 modules
+- Simple state management system
+- Separation of concerns: chat functionality, history management, event listeners, and utilities
+- Responsive design for chat interface and history panel
 
 ## Data Structure
 
@@ -81,9 +113,11 @@ Chat histories are stored as JSON files with the following structure:
 
 ## Recent Updates
 
-- Improved chat history loading in the frontend
-- Added real-time updates of the chat history panel
-- Implemented efficient chat history loading on page load and focus
+- Refactored frontend to use ES6 modules for better code organization
+- Restructured project to follow Flask best practices with 'static' and 'templates' folders
+- Fixed issues with serving static files (CSS and JavaScript)
+- Implemented a simple state management system for the frontend
+- Improved chat history loading and management in the frontend
 
 ## Known Issues and Solutions
 
@@ -101,5 +135,6 @@ Chat histories are stored as JSON files with the following structure:
 - If encountering issues with dependencies, try removing and reinstalling the virtual environment.
 - Ensure the OpenAI API key is correctly set in the `local.env` file.
 - Check the Flask server console for any error messages if the chatbot is not responding.
+- If static files are not loading, check the browser console for 404 errors and verify file paths.
 
 For any questions or issues, please contact the project maintainer.

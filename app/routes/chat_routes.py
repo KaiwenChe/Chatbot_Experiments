@@ -1,13 +1,9 @@
 # File path: app\routes\chat_routes.py
 
-from flask import Blueprint, request, jsonify, send_from_directory
+from flask import Blueprint, request, jsonify
 from app.controllers.chat_controller import ChatController
 
 chat_routes = Blueprint('chat', __name__)
-
-@chat_routes.route('/')
-def index():
-    return send_from_directory('.', 'index.html')
 
 @chat_routes.route('/api/chat', methods=['POST'])
 def chat():

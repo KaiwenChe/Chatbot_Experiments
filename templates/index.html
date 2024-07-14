@@ -1,0 +1,25 @@
+<!-- File: templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakuya Izayoi Chatbot</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <button id="toggle-history"><span class="arrow"></span></button>
+    <div id="history-panel">
+        <h2>Chat Histories</h2>
+        <div id="history-list"></div>
+    </div>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script type="module" src="/static/js/main.js"></script>
+</body>
+</html>
