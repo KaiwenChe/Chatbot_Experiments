@@ -17,9 +17,11 @@ This project is a web-based chatbot application that simulates conversations wit
 1. Character-specific chatbot interactions
 2. Web-based user interface for chatting
 3. Integration with OpenAI's GPT-4 for generating responses
-4. Chat history management (save, load, list)
+4. Chat history management (save, load, list, delete)
 5. Asynchronous saving of chat sessions
 6. User interface for browsing and loading past chat sessions
+7. "New Chat" functionality to start fresh conversations
+8. Thread-safe operations for chat history management
 
 ## Setup Instructions
 
@@ -74,6 +76,7 @@ your_project/
 - MVC architecture with separate models, routes, controllers, and services
 - Integration with OpenAI's API for generating chat responses
 - Asynchronous saving of chat history using ThreadPoolExecutor
+- Thread-safe operations for chat history management using read-write locks
 
 ### Frontend (static directory)
 
@@ -81,6 +84,8 @@ your_project/
 - Simple state management system
 - Separation of concerns: chat functionality, history management, event listeners, and utilities
 - Responsive design for chat interface and history panel
+- New Chat button for starting fresh conversations
+- Delete functionality for removing specific chat histories
 
 ## Data Structure
 
@@ -110,18 +115,20 @@ Chat histories are stored as JSON files with the following structure:
 1. `POST /api/chat`: Send a message and receive a response
 2. `GET /api/chat_histories`: Retrieve a list of all chat histories
 3. `POST /api/load_chat`: Load a specific chat history
+4. `POST /api/delete_chat`: Delete a specific chat history
 
 ## Recent Updates
 
-- Refactored frontend to use ES6 modules for better code organization
-- Restructured project to follow Flask best practices with 'static' and 'templates' folders
-- Fixed issues with serving static files (CSS and JavaScript)
-- Implemented a simple state management system for the frontend
-- Improved chat history loading and management in the frontend
+- Implemented delete chat functionality
+- Added a "New Chat" button to start fresh conversations
+- Improved thread safety in the backend using read-write locks
+- Fixed UI bug with chat history selection highlight
+- Refactored frontend JavaScript for better state management and user interactions
 
 ## Known Issues and Solutions
 
 - File path issues on Windows: Resolved by using `os.path.join` for cross-platform compatibility
+- Race conditions in chat history management: Resolved by implementing read-write locks
 
 ## Future Improvements
 

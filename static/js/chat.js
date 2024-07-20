@@ -1,7 +1,7 @@
 // File: js/chat.js
 import { state } from './state.js';
 import { addMessage } from './utils.js';
-import { loadChatHistories } from './history.js';
+import { loadChatHistories, updateActiveChatInHistory } from './history.js';
 
 export async function sendMessage() {
     const message = state.userInput.value.trim();
@@ -25,6 +25,7 @@ export async function sendMessage() {
             const data = await response.json();
             addMessage(data.response, false);
             state.chatId = data.chat_id;
+            updateActiveChatInHistory(state.chatId);
             
             await loadChatHistories();
         } catch (error) {
@@ -52,14 +53,23 @@ export async function loadChat(loadChatId) {
                     addMessage(msg.content, msg.role === 'user');
                 }
             });
+            updateActiveChatInHistory(state.chatId);
             if (state.isPanelOpen) {
                 toggleHistoryPanel();
             }
-            loadChatHistories();
+            await loadChatHistories();
         } else {
             console.error('Failed to load chat:', data.message);
         }
     } catch (error) {
         console.error('Error loading chat:', error);
     }
+}
+
+export function startNewChat() {
+    state.chatId = null;
+    state.chatMessages.innerHTML = '';
+    state.userInput.value = '';
+    updateActiveChatInHistory(null);
+    loadChatHistories();
 }

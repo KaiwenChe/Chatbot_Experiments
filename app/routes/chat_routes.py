@@ -1,4 +1,4 @@
-# File path: app\routes\chat_routes.py
+# File path: app/routes/chat_routes.py
 
 from flask import Blueprint, request, jsonify
 from app.controllers.chat_controller import ChatController
@@ -22,3 +22,9 @@ def load_chat():
     chat_id = request.json['chat_id']
     result = ChatController.load_chat(chat_id)
     return jsonify(result)
+
+@chat_routes.route('/api/delete_chat', methods=['POST'])
+def delete_chat():
+    chat_id = request.json['chat_id']
+    success = ChatController.delete_chat(chat_id)
+    return jsonify({"success": success})

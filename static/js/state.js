@@ -7,5 +7,6 @@ export const state = {
     sendButton: document.getElementById('send-button'),
     historyPanel: document.getElementById('history-panel'),
     toggleHistoryBtn: document.getElementById('toggle-history'),
-    historyList: document.getElementById('history-list')
+    historyList: document.getElementById('history-list'),
+    newChatBtn: document.getElementById('new-chat-btn')
 };

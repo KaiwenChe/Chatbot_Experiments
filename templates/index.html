@@ -8,11 +8,17 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <button id="toggle-history"><span class="arrow"></span></button>
+    <button id="toggle-history">
+        <span class="arrow"></span>
+    </button>
+
+    <button id="new-chat-btn">+ New Chat</button>
+
     <div id="history-panel">
         <h2>Chat Histories</h2>
         <div id="history-list"></div>
     </div>
+
     <div id="chat-container">
         <div id="chat-messages"></div>
         <div id="input-area">
@@ -20,6 +26,7 @@
             <button id="send-button">Send</button>
         </div>
     </div>
+
     <script type="module" src="/static/js/main.js"></script>
 </body>
 </html>

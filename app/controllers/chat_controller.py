@@ -1,4 +1,4 @@
-# File path: app\controllers\chat_controller.py
+# File path: app/controllers/chat_controller.py
 
 from app.models.chat import ChatHistory
 from app.services.openai_service import OpenAIService
@@ -37,3 +37,7 @@ class ChatController:
             return {"success": True, "chat_history": chat_history.to_dict()}
         else:
             return {"success": False, "message": "Chat history not found"}, 404
+
+    @staticmethod
+    def delete_chat(chat_id):
+        return ChatHistoryService.delete_chat_history(chat_id)

@@ -9,7 +9,7 @@ class OpenAIService:
     @staticmethod
     def generate_response(messages):
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=[msg for msg in messages if msg['role'] != 'system'] + [Config.SYSTEM_MESSAGE]
         )
         return response.choices[0].message.content
