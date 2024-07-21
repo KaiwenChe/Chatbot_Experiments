@@ -5,7 +5,7 @@ import json
 import threading
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
-from app.models.chat import ChatHistory
+from app.models.chat import ChatTree
 from config import Config
 
 class ChatHistoryService:
@@ -14,13 +14,13 @@ class ChatHistoryService:
     _write_lock = threading.Lock()
 
     @classmethod
-    def save_chat_history(cls, chat_history):
-        cls._executor.submit(cls._save_chat_history_async, chat_history)
+    def save_chat_history(cls, chat_tree):
+        cls._executor.submit(cls._save_chat_history_async, chat_tree)
 
     @classmethod
-    def _save_chat_history_async(cls, chat_history):
-        chat_id = chat_history.chat_id
-        safe_start_time = datetime.fromisoformat(chat_history.start_time).strftime("%Y%m%d_%H%M%S")
+    def _save_chat_history_async(cls, chat_tree):
+        chat_id = chat_tree.chat_id
+        safe_start_time = datetime.fromisoformat(chat_tree.start_time).strftime("%Y%m%d_%H%M%S")
         filename = f"chat_{chat_id}_{safe_start_time}.json"
         
         os.makedirs(Config.CHAT_HISTORY_DIR, exist_ok=True)
@@ -40,7 +40,7 @@ class ChatHistoryService:
                 
                 # Save new file
                 with open(filepath, 'w') as f:
-                    json.dump(chat_history.to_dict(), f, indent=2)
+                    json.dump(chat_tree.to_dict(), f, indent=2)
             except PermissionError as e:
                 print(f"Error: Unable to save chat history due to permission denied: {str(e)}")
             except Exception as e:
@@ -56,7 +56,8 @@ class ChatHistoryService:
                     filepath = os.path.join(Config.CHAT_HISTORY_DIR, filename)
                     try:
                         with open(filepath, 'r') as f:
-                            return ChatHistory.from_dict(json.load(f))
+                            print("########## READING HISTORY ##########")
+                            return ChatTree.from_dict(json.load(f))
                     except PermissionError:
                         print(f"Warning: Unable to read chat history file {filename} due to permissions.")
                     except Exception as e:

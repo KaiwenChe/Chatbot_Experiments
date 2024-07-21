@@ -60,12 +60,10 @@ export async function loadChatHistories() {
 }
 
 function selectChat(chatId) {
-    // Remove 'active' class from all history items
     document.querySelectorAll('.history-item').forEach(item => {
         item.classList.remove('active');
     });
     
-    // Add 'active' class to the selected history item
     const selectedItem = document.querySelector(`.history-item[data-chat-id="${chatId}"]`);
     if (selectedItem) {
         selectedItem.classList.add('active');

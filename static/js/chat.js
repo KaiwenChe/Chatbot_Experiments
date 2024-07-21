@@ -1,6 +1,6 @@
 // File: js/chat.js
 import { state } from './state.js';
-import { addMessage } from './utils.js';
+import { addMessage, renderChatTree } from './utils.js';
 import { loadChatHistories, updateActiveChatInHistory } from './history.js';
 
 export async function sendMessage() {
@@ -48,11 +48,7 @@ export async function loadChat(loadChatId) {
         if (data.success) {
             state.chatId = data.chat_history.chat_id;
             state.chatMessages.innerHTML = '';
-            data.chat_history.messages.forEach(msg => {
-                if (msg.role !== 'system') {
-                    addMessage(msg.content, msg.role === 'user');
-                }
-            });
+            renderChatTree(data.chat_history.tree);
             updateActiveChatInHistory(state.chatId);
             if (state.isPanelOpen) {
                 toggleHistoryPanel();

@@ -14,3 +14,23 @@ export function formatDate(dateString) {
     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
     return new Date(dateString).toLocaleDateString('en-US', options);
 }
+
+export function renderChatTree(node) {
+    if (node.role !== 'system') {
+        addMessage(node.content, node.role === 'user');
+    }
+    node.children.forEach(child => renderChatTree(child));
+}
+
+export function flattenChatTree(node, messages = []) {
+    if (node.role !== 'system') {
+        messages.push({
+            id: node.id,
+            content: node.content,
+            role: node.role,
+            timestamp: node.timestamp
+        });
+    }
+    node.children.forEach(child => flattenChatTree(child, messages));
+    return messages;
+}
