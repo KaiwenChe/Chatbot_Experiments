@@ -2,7 +2,22 @@
 
 ## Overview
 
-This project is a web-based chatbot application that simulates conversations with Sakuya Izayoi, a character from the Touhou Project. The chatbot interacts with users as if they were Flandre Scarlet, another character from the same universe. The application uses OpenAI's GPT-4 for generating responses and includes functionality for saving, loading, and managing chat histories.
+This project is a web-based chatbot application that serves as a practice implementation of features found in mainstream chatbot applications like ChatGPT. It's primarily designed as a learning exercise to understand and replicate key functionalities of modern AI-powered chat interfaces.
+
+Key aspects of this project include:
+1. A functional web-based chat interface
+2. Integration with OpenAI's GPT-4 for generating responses
+3. Chat history management (save, load, list, delete)
+4. User interface for browsing and loading past chat sessions
+
+While the chatbot currently role-plays as Sakuya Izayoi interacting with Flandre Scarlet (characters from the Touhou Project), this is mainly a placeholder to demonstrate user-assistant interactions. The core focus is on the technical implementation and functionality rather than the specific characters involved.
+
+This project also serves as a potential platform for experimenting with additional features and concepts in AI-assisted conversations, such as:
+- Implementing more advanced chat history management features like branching, re-structuring, and modification
+- Exploring agentic workflows in AI conversations
+- Testing novel interfaces like Claude Artifact and ChatGPT Canvas
+
+As a practice project, it provides hands-on experience with full-stack development, API integration, and user interface design in the context of AI-powered applications.
 
 ## Technology Stack
 
